@@ -1,0 +1,13 @@
+Problem 2:
+convolution is used in computer vision because it is a powerful tool for processing images and extracting meaningful features
+
+If an input size is 63 × 63, padding size is 1, kernel size is 4 × 4, stride is 1, its output size is 62 x 62
+
+Problem 3:
+substandard product is from A: 
+    P(A|standard) = (.7*5%)/((.7*5%)+(.3*7.5%))=60.9%
+    P(A, standard) = .7*5% = 3.5%
+probability that we test 4 products, only one of them is substandard and it is from A
+    = P(~standard)^3 x P(A|standard) x P(standard) x 4 
+    = [(0.7*95%+0.3*92.5%)^3]*(0.7*5%+0.3*7.5%)*60.9%*3
+    = 11.7%
