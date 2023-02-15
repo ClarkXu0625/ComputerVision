@@ -60,15 +60,12 @@ def main():
 
     # model evaluation
     evaluator = evaluation(model=model)
-    print(evaluator.eval(test_loader=test_loader))
+    print("Accuracy for test images prediction is: "+ str(evaluator.eval(test_loader=test_loader)))
 
-    # model inference
-    sample = torch.rand(1,28,28)  # complete the sample here
+    # model inference, print predicted class from given sample image tensor
+    sample = torch.randn(1,28,28)  # complete the sample here
     inferencer = inference(model=model)
-    inferencer.infer(sample=sample)
-    #img = np.transpose(sample.numpy(),(1,2,0))
-    #plt.imshow(img)
-    #plt.show()
+    print("The predicted class from given image is: "+ str(inferencer.infer(sample=sample)))
 
     return
 
