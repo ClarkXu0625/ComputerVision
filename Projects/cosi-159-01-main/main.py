@@ -15,6 +15,7 @@ import torchvision
 
 from model import Net
 from train import Trainer
+from evaluation import evaluation   # evaluation class to measure prediction accuracy
 
 
 def parse_args():
@@ -56,7 +57,8 @@ def main():
     trainer.train(train_loader=train_loader, epochs=args.epochs, lr=args.lr, save_dir="./save/")
 
     # model evaluation
-    trainer.eval(test_loader=test_loader)
+    evaluator = evaluation(model=model)
+    print(evaluator.eval(test_loader=test_loader))
 
     # model inference
     sample = None  # complete the sample here

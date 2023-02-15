@@ -58,12 +58,6 @@ class Trainer:
 
         return
 
-    def eval(self, test_loader: DataLoader) -> float:
-        """ Model evaluation, return the model accuracy over test set """
-
-        self._model.eval()
-        
-        return
 
     def infer(self, sample: Tensor) -> int:
         """ Model inference: input an image, return its class index """
