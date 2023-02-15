@@ -21,7 +21,7 @@ class evaluation:
 
         with torch.no_grad():
             for image, label in test_loader:
-                output = self._model(images)
+                output = self._model(image)
                 _, predicted_class = torch.max(output.data, 1)
 
                 # Increment correct predictions (if prediction is correct) and evaluations

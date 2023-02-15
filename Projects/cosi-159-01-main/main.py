@@ -16,6 +16,8 @@ import torchvision
 from model import Net
 from train import Trainer
 from evaluation import evaluation   # evaluation class to measure prediction accuracy
+from inference import inference     # inference class to predict class from given image
+
 
 
 def parse_args():
@@ -61,8 +63,12 @@ def main():
     print(evaluator.eval(test_loader=test_loader))
 
     # model inference
-    sample = None  # complete the sample here
-    trainer.infer(sample=sample)
+    sample = torch.rand(1,28,28)  # complete the sample here
+    inferencer = inference(model=model)
+    inferencer.infer(sample=sample)
+    #img = np.transpose(sample.numpy(),(1,2,0))
+    #plt.imshow(img)
+    #plt.show()
 
     return
 
