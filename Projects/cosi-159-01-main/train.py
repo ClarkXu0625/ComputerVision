@@ -1,3 +1,8 @@
+'''
+optim: optimizer. Choose one optimizer from PyTorch
+    optim.SGD(params = ..., lr = lr)
+F is the API from PyTorch
+'''
 import os
 import time
 
@@ -62,7 +67,13 @@ class Trainer:
 
     def infer(self, sample: Tensor) -> int:
         """ Model inference: input an image, return its class index """
-        return
+        self._model.eval()    
+        inference = self._model(sample)[0]
+
+        # Get the class with the highest probability
+        predicted_class = torch.argmax(inference).item()
+
+        return predicted_class
 
     def load_model(self, path: str) -> None:
         """ load model from a .pth file """

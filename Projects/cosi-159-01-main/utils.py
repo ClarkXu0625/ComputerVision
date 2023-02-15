@@ -1,3 +1,11 @@
+'''
+epochs: number of training, steps of model converge. 
+    look at the loss function
+    set max epochs
+learning rate (ls)
+batch size (bs)
+
+'''
 class AverageMeter:
     """ Computes and stores the average and current value """
 
