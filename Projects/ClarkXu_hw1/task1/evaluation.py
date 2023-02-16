@@ -1,11 +1,5 @@
 import torch
-from torch import nn, Tensor
 from torch.utils.data import DataLoader
-from torch import optim
-import torch.nn.functional as F
-
-from utils import AverageMeter
-
 
 class evaluation:
     def __init__(self, model):
@@ -28,4 +22,4 @@ class evaluation:
                 correct_predictions += (predicted_class == label).sum().item()
                 evaluation_num += label.size(0)
         
-        return  correct_predictions/evaluation_num
+        return  correct_predictions/evaluation_num*100

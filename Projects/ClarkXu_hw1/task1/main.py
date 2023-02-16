@@ -18,6 +18,8 @@ from train import Trainer
 from evaluation import evaluation   # evaluation class to measure prediction accuracy
 from inference import inference     # inference class to predict class from given image
 
+import numpy as np
+import matplotlib.pyplot as plt
 
 
 def parse_args():
@@ -58,14 +60,25 @@ def main():
     # model training
     trainer.train(train_loader=train_loader, epochs=args.epochs, lr=args.lr, save_dir="./save/")
 
-    # model evaluation
+    ### model evaluation
     evaluator = evaluation(model=model)
-    print("Accuracy for test images prediction is: "+ str(evaluator.eval(test_loader=test_loader)))
+    print("Accuracy for test images prediction is: "+ str(evaluator.eval(test_loader=test_loader)) + "%")
 
-    # model inference, print predicted class from given sample image tensor
-    sample = torch.randn(1,28,28)  # complete the sample here
+    ### model inference, print predicted class from given sample image tensor   
+    # Get a random image from the data loader
+    images, label = next(iter(test_loader)) 
+    index = torch.randint(0, images.shape[0], size=(1,))    # Generate a random index   
+    selected_tensor = images[index] # Select a single tensor from the larger tensor using the index
+    sample = selected_tensor.reshape(1, 28, 28)
+
+    # perform the inference task
     inferencer = inference(model=model)
     print("The predicted class from given image is: "+ str(inferencer.infer(sample=sample)))
+
+    # print the random image
+    image_np = np.squeeze(sample.numpy())
+    plt.imshow(image_np, cmap='gray')
+    plt.show()
 
     return
 
