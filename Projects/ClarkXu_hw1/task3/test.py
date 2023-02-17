@@ -12,23 +12,10 @@ image_names = ["image1.jpeg","image2.jpeg","image3.jpeg",
 
 ### question 1
 # hindered vs not hindered, both false
-result1 = DeepFace.verify(img1_path="image1.jpeg", img2_path="image2.jpeg")
-result2 = DeepFace.verify(img1_path="image1.jpeg", img2_path="image3.jpeg")
+def verify(image1, image2):
+    result = DeepFace.verify(img1_path=image1, img2_path=image2)
 
-# not hindered front face
-result3 = DeepFace.verify(img1_path="image2.jpeg", img2_path="image3.jpeg")
-
-# front vs side
-result4 = DeepFace.verify(img1_path="image2.jpeg", img2_path="image4_side.jpeg")
-result5 = DeepFace.verify(img1_path="image3.jpeg", img2_path="image4_side.jpeg")
-
-# single vs crowd
-result6 = DeepFace.verify(img1_path="image3.jpeg", img2_path="image5_crowd.jpeg")
-result7 = DeepFace.verify(img1_path="image3.jpeg", img2_path="image6_side.webp")
-result8 = DeepFace.verify(img1_path="image3.jpeg", img2_path="image7_side.jpg")
-
-results = [result1,result2,result3,result4,result5,result6,result7,result8]
-print(results[1])
+verify(image_names[0], image_names[1])
 
 ### Question 2
 def analyze(image):
@@ -36,7 +23,7 @@ def analyze(image):
                             actions = ['age', 'gender', 'race', 'emotion'])
     print(objs)
 
-analyze("image4_side.jpeg")
+analyze(image_names[3])
 
 
 ### question 3
@@ -49,9 +36,9 @@ backends = [
   'mediapipe'
 ]
 # define a function to print the detected area of the image
-def print_face(image):
+def print_face(image_path):
     #face detection and alignment
-    face_objs = DeepFace.extract_faces(img_path = image, 
+    face_objs = DeepFace.extract_faces(img_path = image_path, 
             target_size = (224, 224), 
             detector_backend = backends[4]
     )
@@ -62,8 +49,7 @@ def print_face(image):
     h = face_img["h"]
 
     # Load the image file
-    img_path = image
-    img = Image.open(img)
+    img = Image.open(image_path)
 
     # Extract the area from the image
     area = img.crop((x, y, x+w, y+h))
