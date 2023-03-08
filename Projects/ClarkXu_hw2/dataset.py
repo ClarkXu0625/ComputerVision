@@ -33,29 +33,31 @@ class FaceVerificationDataset(Dataset):
 
     def load_pairs_file(self):
         # Load the image pairs and labels from a file
-        pairs_file = os.path.join(self.root_dir, 'pairsDevTrain.txt')
+        pairs_file = os.path.join(self.root_dir, self.label_dir)
         image_pairs = []
         labels = []
         
         with open(pairs_file, "r") as train_file:
             size =int(train_file.readline())    # dataset labels number of pairs at the first line
-
+            
             for i in range(size):
                 text = train_file.readline()
                 temp = text.replace("\n", "").split("\t")
-                path1 = temp[0]+"/"+temp[0]+"_"+ '{:0>4s}'.format(temp[1])
-                path2 = temp[0]+"/"+temp[0]+"_"+ '{:0>4s}'.format(temp[2])
+                path1 = temp[0]+"/"+temp[0]+"_"+ '{:0>4s}'.format(temp[1])+".jpg"
+                path2 = temp[0]+"/"+temp[0]+"_"+ '{:0>4s}'.format(temp[2])+".jpg"
                 image_pairs.append((path1, path2))
                 labels.append(0)
                 i+=1
             for i in range(size):
                 text = train_file.readline()
                 temp = text.replace("\n", "").split("\t")
-                path1 = temp[0]+"/"+temp[0]+"_"+ '{:0>4s}'.format(temp[1])
-                path2 = temp[2]+"/"+temp[2]+"_"+ '{:0>4s}'.format(temp[3])
+                path1 = temp[0]+"/"+temp[0]+"_"+ '{:0>4s}'.format(temp[1])+".jpg"
+                path2 = temp[2]+"/"+temp[2]+"_"+ '{:0>4s}'.format(temp[3])+".jpg"
                 image_pairs.append((path1, path2))
                 labels.append(1)
                 i+=1
+            
         return image_pairs, labels
 
 
+#f = FaceVerificationDataset("./data/lfw","pairsDevToy.txt")
