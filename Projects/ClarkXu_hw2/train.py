@@ -38,11 +38,16 @@ class Trainer:
         for i in range(epochs):
             tik = time.time()
             loss_track.reset()
-            for data, target in train_loader:
+            data = train_loader.image_pairs
+            target = train_loader.labels
+            #for data, target in train_loader:
+            for i in range(2*len(train_loader)):
                 optimizer.zero_grad()
-                output = self._model(data)
-
-                loss = F.nll_loss(output, target)
+                output = self._model(data[i])
+                #output = self._model(data)
+                
+                loss = F.nll_loss(output, target[i])
+                # loss = F.nll_loss(output, target)
                 loss.backward()
                 optimizer.step()
 

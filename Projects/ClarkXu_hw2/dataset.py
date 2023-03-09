@@ -2,6 +2,8 @@ import os
 from PIL import Image
 import torch
 from torch.utils.data import Dataset
+import torchvision
+from torchvision import transforms
 
 class FaceVerificationDataset(Dataset):
     def __init__(self, root_dir, label_dir, transform=None):
@@ -35,6 +37,7 @@ class FaceVerificationDataset(Dataset):
         # Load the image pairs and labels from a file
         pairs_file = os.path.join(self.root_dir, self.label_dir)
         image_pairs = []
+        data_pairs = []
         labels = []
         
         with open(pairs_file, "r") as train_file:
@@ -57,7 +60,19 @@ class FaceVerificationDataset(Dataset):
                 labels.append(1)
                 i+=1
             
-        return image_pairs, labels
 
+        transform = torchvision.transforms.Compose([
+            torchvision.transforms.ToTensor(),
+            torchvision.transforms.Normalize((0.1307,), (0.3081,))
+        ])
+        for path in image_pairs:
+            img1 = Image.open(os.path.join(self.root_dir, path[0]))
+            img2 = Image.open(os.path.join(self.root_dir, path[1]))
+            output = (transform(img1), transform(img2))
+            data_pairs.append(output)
 
+        return data_pairs, labels
+
+def toTensor(img):
+    return transforms.ToTensor(img)
 #f = FaceVerificationDataset("./data/lfw","pairsDevToy.txt")
